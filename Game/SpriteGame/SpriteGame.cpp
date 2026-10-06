@@ -26,7 +26,7 @@ bool SpriteGame::Initialize() {
 
 	m_gameOverText = new Text(Resources().Get<Font>("fonts/font.ttf", 50.0f));
 
-	//Engine::Get().GetAudio().AddSound("alert", "audio/alert.mp3");
+	Engine::Get().GetAudio().AddSound("alert", "audio/alert.mp3");
 
 	return true;
 }
