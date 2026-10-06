@@ -25,7 +25,6 @@ int main()
     Engine::Get().Initialize();
 
 
-
     //create audio system
     FMOD::System* audio;
     FMOD::System_Create(&audio);
@@ -73,13 +72,12 @@ int main()
 
 
         //render
-        Engine::Get().GetRenderer().setColor(0.0f, 0.0f, 0.0f);
-        Engine::Get().GetRenderer().Clear();
+        Engine::Get().GetRenderer().BeginFrame();
         
 
         Engine::Get().GetPS().Draw(Engine::Get().GetRenderer());
 
-        Engine::Get().GetRenderer().Present();
+        Engine::Get().GetRenderer().EndFrame();
     }
 
 
