@@ -11,29 +11,8 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{05841c15-2663-40d5-b981-f06b79561345}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\SpaceGame">
-      <UniqueIdentifier>{34aba724-2e24-46e9-aa93-d9b9256ebfaa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\SpriteGame">
-      <UniqueIdentifier>{a1556e84-6441-47cd-8bd9-98a7c7eb510b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\SpaceGame\Animations">
-      <UniqueIdentifier>{0bdf462b-1922-4bfa-894c-fb50ba5ca9d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\SpaceGame\Scenes">
-      <UniqueIdentifier>{d8bebbb5-c297-410d-a51b-98443859970d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\SpaceGame\Tilemaps">
-      <UniqueIdentifier>{776d3f60-10f3-4860-8755-5c70f5ab9ecf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\SpriteGame\Animations">
-      <UniqueIdentifier>{3c644517-a93a-41ff-b511-22b518c34d56}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\SpriteGame\Scenes">
-      <UniqueIdentifier>{d0b00ee1-6b48-4201-9bff-aff2dfd2315d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\SpriteGame\Tilemaps">
-      <UniqueIdentifier>{2c3b74ac-9201-4919-b8d7-df341c389e59}</UniqueIdentifier>
+    <Filter Include="Assets\Shaders">
+      <UniqueIdentifier>{6887cb4c-b973-4bac-93de-d4a850e4ae59}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,20 +27,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Build\Assets\SpriteGame\animations\coin_idle.json">
-      <Filter>Assets\SpriteGame\Animations</Filter>
-    </None>
-    <None Include="..\Build\Assets\SpriteGame\tilemaps\world.json">
-      <Filter>Assets\SpriteGame\Tilemaps</Filter>
-    </None>
-    <None Include="..\Build\Assets\SpriteGame\scenes\scene.json">
-      <Filter>Assets\SpriteGame\Scenes</Filter>
-    </None>
-    <None Include="..\Build\Assets\SpriteGame\scenes\level.json">
-      <Filter>Assets\SpriteGame\Scenes</Filter>
-    </None>
-    <None Include="..\Build\Assets\SpriteGame\animations\enemy_attack.json">
-      <Filter>Assets\SpriteGame\Animations</Filter>
-    </None>
+    <CustomBuild Include="..\Shaders\color.frag.hlsl">
+      <Filter>Assets\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Shaders\position.vert.hlsl">
+      <Filter>Assets\Shaders</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>
