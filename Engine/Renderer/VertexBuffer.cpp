@@ -51,8 +51,8 @@ namespace nu
 		};
 
 		// create the transfer buffer with SDL_CreateGPUTransferBuffer(device, &createInfo)
-		SDL_GPUTransferBuffer* transferBuffer = nullptr;
-		if (transferBuffer == SDL_CreateGPUTransferBuffer(m_gpuDevice, &transferBufferCreateInfo))
+		SDL_GPUTransferBuffer* transferBuffer = SDL_CreateGPUTransferBuffer(m_gpuDevice, &transferBufferCreateInfo);
+		if (transferBuffer == nullptr)
 		{
 			std::cerr << "Could not create transfer buffer: " << SDL_GetError() << std::endl;
 

@@ -18,7 +18,7 @@ namespace nu {
 		void Present() const;
 
 		bool BeginFrame();
-		bool EndFrame() const;
+		bool EndFrame();
 
 		void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255) const;
 		void setColor(float r, float g, float b, float a = 1.0f) const;
