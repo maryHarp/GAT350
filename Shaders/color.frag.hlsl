@@ -1,16 +1,22 @@
+cbuffer Uniforms : register(b0, space3)
+{
+    float4 color;
+    float time;
+}
 struct Input
 {
+    float4 color : TEXCOORD0;
 };
 
 struct Output
 {
-	float4 Color : SV_Target0;
+	float4 color : SV_Target0;
 };
 
 Output main(Input input)
 {
 	Output output;
-	output.Color = float4(0.6f, 0.0f, 0.8f, 1.0f);
+    output.color = color;
 
 	return output;
 }

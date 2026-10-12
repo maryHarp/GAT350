@@ -9,16 +9,24 @@
 
 using namespace nu;
 
+namespace nu{
+    struct Color4 {
+        float r, g, b, a;
+    };
+
+}
+
 struct Vertex
 {
-    float x, y, z;
+    Vector3 position;
+    Color4 color;
 };
 
 std::vector<Vertex> vertices =
 {
-    Vertex{ -0.8f, 0.0f, 0.0f}, // Bottom-Left
-    Vertex{  0.8f, 0.0f, 0.0f}, // Bottom-Right
-    Vertex{  0.0f,  0.5f, 0.0f}, // Top-Middle
+    Vertex{ Vector3{-0.8f, 0.0f, 0.0f }, Color4{1, 0, 0 ,1 }}, // Bottom-Left
+    Vertex{ Vector3{0.8f, 0.0f, 0.0f }, Color4{0, 1, 0 ,1 }}, // Bottom-Right
+    Vertex{ Vector3{0.0f,  0.5f, 0.0f }, Color4{0, 0, 1 ,1 }}, // Top-Middle
 };
 
 
@@ -33,49 +41,36 @@ int main()
     auto vb = std::make_shared<VertexBuffer>();
     vb->Create<Vertex>(vertices, Engine::Get().GetRenderer().GetGPUDevice());
 
-    auto vshader = Resources().Get<nu::Shader>("shaders/position.vert", Engine::Get().GetRenderer());
-    auto fshader = Resources().Get<nu::Shader>("shaders/color.frag", Engine::Get().GetRenderer());
+    auto vshader = Resources().Get<nu::Shader>("shaders/position.vert", Engine::Get().GetRenderer(), 1);
+    auto fshader = Resources().Get<nu::Shader>("shaders/color.frag", Engine::Get().GetRenderer(), 1);
 
     auto pipeline = std::make_shared<Pipeline>();
     pipeline->AddVertexBuffer(sizeof(Vertex));
+    //position
     pipeline->AddVertexAttribute(
         0,
         SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-        offsetof(Vertex, x));
+        offsetof(Vertex, position));
+    //color
+    pipeline->AddVertexAttribute(
+        1,
+        SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
+        offsetof(Vertex, color));
+
 
     pipeline->Create(*vshader.get(), *fshader.get(),
         Engine::Get().GetRenderer().GetGPUDevice(),
         Engine::Get().GetRenderer().GetWindow());
 
 
-    //create audio system
-    FMOD::System* audio;
-    FMOD::System_Create(&audio);
-
-    void* extradriverdata = nullptr;
-    audio->init(32, FMOD_INIT_NORMAL, extradriverdata);
-    
-    std::vector<FMOD::Sound*> sounds;
-
-    FMOD::Sound* sound = nullptr;
-   
-    audio->createSound("snare.wav", FMOD_DEFAULT, 0, &sound);
-    sounds.push_back(sound);
-
-    audio->createSound("bgmusic.mp3", FMOD_DEFAULT, 0, &sound);
-
-    audio->playSound(sound, 0, false, nullptr);
+    float scale = 0.5f;
+    Color4 color{ 0,0,0,1 };
 
     //main loop
     bool quit = false;
     
     while (!quit) {
-        audio->update();
-
-        if (Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_SPACE))
-        {
-            audio->playSound(sounds[0], nullptr, false, nullptr);
-        }
+        
 
         //update
         SDL_Event event;
@@ -93,6 +88,8 @@ int main()
    
         float dt = Engine::Get().GetTime().GetDeltaTime();
 
+        scale = sin(Engine::Get().GetTime().GetTime());
+        color.r = sin(Engine::Get().GetTime().GetTime() * 10.0f) * 0.5f + 0.5f;
 
         //render
         // RENDER
@@ -100,6 +97,9 @@ int main()
 
         Engine::Get().GetRenderer().SetPipeline(*pipeline);
         Engine::Get().GetRenderer().SetVertexBuffer(*vb);
+        Engine::Get().GetRenderer().setVertexUniform(0, &scale, sizeof(scale));
+        Engine::Get().GetRenderer().setFragmentUniform(0, &color, sizeof(color));
+       
         Engine::Get().GetRenderer().Draw(vb->GetVertexCount());
 
         Engine::Get().GetRenderer().EndFrame();

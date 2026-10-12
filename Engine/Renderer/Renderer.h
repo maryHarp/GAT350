@@ -45,6 +45,9 @@ namespace nu {
 		void SetVertexBuffer(const class VertexBuffer& vertexBuffer);
 		void Draw(uint32_t vertexCount);
 
+		void setVertexUniform(uint32_t slot, const void* data, uint32_t size);
+		void setFragmentUniform(uint32_t slot, const void* data, uint32_t size);
+
 		friend class Text;
 		friend class Texture;
 		friend class Shader;
