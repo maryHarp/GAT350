@@ -4,6 +4,8 @@
 #include "Renderer/Shader.h"
 #include "Renderer/VertexBuffer.h"
 #include "Renderer/Pipeline.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "Resources/ResourceManager.h"
 
@@ -63,8 +65,14 @@ int main()
         Engine::Get().GetRenderer().GetWindow());
 
 
-    float scale = 0.5f;
     Color4 color{ 0,0,0,1 };
+
+    struct vertexUniform
+    {
+        glm::mat4 model;
+    };
+
+    vertexUniform uniform;
 
     //main loop
     bool quit = false;
@@ -87,9 +95,15 @@ int main()
         Engine::Get().Update();
    
         float dt = Engine::Get().GetTime().GetDeltaTime();
+        float time = Engine::Get().GetTime().GetTime();
 
-        scale = sin(Engine::Get().GetTime().GetTime());
         color.r = sin(Engine::Get().GetTime().GetTime() * 10.0f) * 0.5f + 0.5f;
+
+        uniform.model = glm::mat4(1.0f);
+        uniform.model = glm::translate(uniform.model, glm::vec3(0.5f, 0.0f, 0.0f));
+        uniform.model = glm::rotate(uniform.model, time * 3.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+        uniform.model = glm::scale(uniform.model, glm::vec3(0.5f, 0.5f, 0.5f));
+
 
         //render
         // RENDER
@@ -97,7 +111,7 @@ int main()
 
         Engine::Get().GetRenderer().SetPipeline(*pipeline);
         Engine::Get().GetRenderer().SetVertexBuffer(*vb);
-        Engine::Get().GetRenderer().setVertexUniform(0, &scale, sizeof(scale));
+        Engine::Get().GetRenderer().setVertexUniform(0, &uniform, sizeof(uniform));
         Engine::Get().GetRenderer().setFragmentUniform(0, &color, sizeof(color));
        
         Engine::Get().GetRenderer().Draw(vb->GetVertexCount());
