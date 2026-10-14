@@ -1,7 +1,6 @@
 cbuffer Uniforms : register(b0, space3)
 {
     float4 color;
-    float time;
 }
 struct Input
 {
@@ -16,7 +15,7 @@ struct Output
 Output main(Input input)
 {
 	Output output;
-    output.color = color;
+    output.color = input.color;
 
 	return output;
 }
