@@ -43,7 +43,10 @@ namespace nu {
 
 		void SetPipeline(const class Pipeline& pipeline);
 		void SetVertexBuffer(const class VertexBuffer& vertexBuffer);
+		void SetIndexBuffer(const class IndexBuffer& indexBuffer);
+
 		void Draw(uint32_t vertexCount);
+		void DrawIndex(const class IndexBuffer& indexBuffer);
 
 		void setVertexUniform(uint32_t slot, const void* data, uint32_t size);
 		void setFragmentUniform(uint32_t slot, const void* data, uint32_t size);
@@ -52,6 +55,7 @@ namespace nu {
 		friend class Texture;
 		friend class Shader;
 		friend class VertexBuffer;
+		friend class IndexBuffer;
 
 
 
