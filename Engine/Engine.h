@@ -19,7 +19,6 @@
 
 #include "Serialization/Json.h"
 
-#include "Physics/Physics.h"
 
 //systems
 #include "Input/Input.h"
@@ -29,6 +28,8 @@
 #include "Framework/Actor.h"
 #include "Framework/Scene.h"
 #include "Framework/Game.h"
+
+
 
 
 namespace nu {
@@ -53,7 +54,6 @@ namespace nu {
 		}
 		Audio& GetAudio() { return m_audio; }
 		ParticleSystem& GetPS() { return m_particleSystem;  }
-		Physics& GetPhysics() { return m_physics; }
 
 	private:
 		Engine() = default;
@@ -64,7 +64,6 @@ namespace nu {
 		Time m_time;
 		Audio m_audio;
 		ParticleSystem m_particleSystem;
-		Physics m_physics;
 
 	};
 

@@ -56,7 +56,7 @@ namespace nu {
 				// TODO: draw point with particle position
 
 				renderer.setColor(particle.color.r, particle.color.g, particle.color.b);
-				renderer.DrawTexture(*m_texture, particle.position.x, particle.position.y, m_transform.rotation, 0.25f);
+				//renderer.DrawTexture(*m_texture, particle.position.x, particle.position.y, m_transform.rotation, 0.25f);
 
 			}
 		}

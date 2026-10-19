@@ -48,20 +48,11 @@
     <ClInclude Include="Components\RendererComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Components\SpriteRendererComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Components\ColliderComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\CircleColliderComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\Component.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\Physics.h">
-      <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="Math\MathUtils.h">
       <Filter>Math</Filter>
@@ -147,13 +138,7 @@
     <ClInclude Include="Renderer\TextureFrames.h">
       <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Components\SpriteAnimationRendererComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Components\PhysicsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\RigidBodyPhysicsComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Framework\framework.h">
@@ -165,20 +150,8 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Physics\PhysicsBody.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\Box2dPhysicsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\Tilemap.h">
       <Filter>Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\TilemapRendererComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\SpriteAnimatorRendererComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Pipeline.h">
       <Filter>Renderer</Filter>
@@ -194,15 +167,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Components\SpriteRendererComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\CircleColliderComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\Physics.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
     <ClCompile Include="Serialization\Json.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
@@ -239,9 +203,6 @@
     <ClCompile Include="Renderer\ParticleSystem.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\Renderer.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\Text.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
@@ -251,13 +212,7 @@
     <ClCompile Include="Renderer\TextureFrames.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Components\SpriteAnimationRendererComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Components\PhysicsComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\RigidBodyPhysicsComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
@@ -266,20 +221,8 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Physics\PhysicsBody.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\Box2DPhysicsComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\Tilemap.cpp">
       <Filter>Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\TilemapRendererComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\SpriteAnimatorRendererComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Pipeline.cpp">
       <Filter>Renderer</Filter>
@@ -291,6 +234,9 @@
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\VertexBuffer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Renderer.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
   </ItemGroup>
