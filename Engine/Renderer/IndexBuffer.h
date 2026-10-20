@@ -17,6 +17,8 @@ namespace nu
 
 		friend class Renderer;
 
+		friend class Model;
+
 	private:
 		uint32_t m_indexCount{ 0 };
 

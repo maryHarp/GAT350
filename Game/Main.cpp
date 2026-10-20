@@ -59,26 +59,47 @@ int main()
     auto ib = std::make_shared<IndexBuffer>();
     ib->Create(indices, Engine::Get().GetRenderer());
 
+
+    auto model = Resources().Get<Model>("models/teapot-1.obj", Engine::Get().GetRenderer());
+
     auto vshader = Resources().Get<nu::Shader>("shaders/unlit.vert", Engine::Get().GetRenderer(), 1);
     auto fshader = Resources().Get<nu::Shader>("shaders/unlit.frag", Engine::Get().GetRenderer(), 1);
 
     auto pipeline = std::make_shared<Pipeline>();
-    pipeline->AddVertexBuffer(sizeof(Vertex));
-    //position
-    pipeline->AddVertexAttribute(
-        0,
-        SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-        offsetof(Vertex, position));
-    //color
-    pipeline->AddVertexAttribute(
-        1,
-        SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2,
-        offsetof(Vertex, color));
 
+    pipeline->AddVertexBuffer(sizeof(Model::Vertex));
+    pipeline->AddVertexAttribute(0, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, position));
+    pipeline->AddVertexAttribute(1, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2, offsetof(Model::Vertex, texcoord));
+    pipeline->AddVertexAttribute(2, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, normal));
+    pipeline->AddVertexAttribute(3, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, tangent));
 
     pipeline->Create(*vshader.get(), *fshader.get(),
         Engine::Get().GetRenderer().GetGPUDevice(),
         Engine::Get().GetRenderer().GetWindow());
+
+
+
+
+    //auto vshader = Resources().Get<nu::Shader>("shaders/unlit.vert", Engine::Get().GetRenderer(), 1);
+    //auto fshader = Resources().Get<nu::Shader>("shaders/unlit.frag", Engine::Get().GetRenderer(), 1);
+
+    //auto pipeline = std::make_shared<Pipeline>();
+    //pipeline->AddVertexBuffer(sizeof(Vertex));
+    ////position
+    //pipeline->AddVertexAttribute(
+    //    0,
+    //    SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
+    //    offsetof(Vertex, position));
+    ////color
+    //pipeline->AddVertexAttribute(
+    //    1,
+    //    SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2,
+    //    offsetof(Vertex, color));
+
+
+    //pipeline->Create(*vshader.get(), *fshader.get(),
+    //    Engine::Get().GetRenderer().GetGPUDevice(),
+    //    Engine::Get().GetRenderer().GetWindow());
 
 
     Color4 color{ 0,0,0,1 };
@@ -149,17 +170,28 @@ int main()
 
         //render
         // RENDER
+        // 
+        //Engine::Get().GetRenderer().BeginFrame();
+
+        //Engine::Get().GetRenderer().SetPipeline(*pipeline);
+        //Engine::Get().GetRenderer().SetVertexBuffer(*vb);
+        //Engine::Get().GetRenderer().SetIndexBuffer(*ib);
+        //Engine::Get().GetRenderer().setVertexUniform(0, &uniform, sizeof(uniform));
+        //Engine::Get().GetRenderer().setFragmentUniform(0, &color, sizeof(color));
+       
+        ////Engine::Get().GetRenderer().Draw(vb->GetVertexCount());
+        //Engine::Get().GetRenderer().DrawIndex(*ib);
+
+
+        //Engine::Get().GetRenderer().EndFrame();
+
         Engine::Get().GetRenderer().BeginFrame();
 
         Engine::Get().GetRenderer().SetPipeline(*pipeline);
-        Engine::Get().GetRenderer().SetVertexBuffer(*vb);
-        Engine::Get().GetRenderer().SetIndexBuffer(*ib);
         Engine::Get().GetRenderer().setVertexUniform(0, &uniform, sizeof(uniform));
         Engine::Get().GetRenderer().setFragmentUniform(0, &color, sizeof(color));
-       
-        //Engine::Get().GetRenderer().Draw(vb->GetVertexCount());
-        Engine::Get().GetRenderer().DrawIndex(*ib);
 
+        model->Draw(Engine::Get().GetRenderer());
 
         Engine::Get().GetRenderer().EndFrame();
     }
