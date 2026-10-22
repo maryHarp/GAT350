@@ -10,7 +10,7 @@ namespace nu {
 	{
 		// reserve # particles in container
 		m_particles.resize(size);
-		m_texture = Resources().Get<Texture>("textures/SpaceCat.png", Engine::Get().GetRenderer());
+		//m_texture = Resources().Get<Texture>("textures/SpaceCat.png", Engine::Get().GetRenderer());
 
 		return true;
 	}

@@ -14,6 +14,7 @@ namespace nu
 		const aiScene* scene = importer.ReadFile(filename,
 			aiProcess_Triangulate |
 			aiProcess_GenSmoothNormals |
+			aiProcess_FlipUVs |
 			aiProcess_CalcTangentSpace);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -88,13 +89,13 @@ namespace nu
 
 			// todo: set vertex.normal from mesh->mNormals[i] (x, y, z)
 			// normals are optional, use (0, 0, 0) if mesh->mNormals is null (see texcoord above)
-			vertex.texcoord = (mesh->mNormals)
+			vertex.normal = (mesh->mNormals)
 				? glm::vec3{ mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z }
 				: glm::vec3{ 0, 0, 0 };
 
 			// todo: set vertex.tangent from mesh->mTangents[i] (x, y, z)
 			// tangents are optional, use (0, 0, 0) if mesh->mTangents is null (see texcoord above)
-			vertex.texcoord = (mesh->mTangents)
+			vertex.tangent = (mesh->mTangents)
 				? glm::vec3{ mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z }
 				: glm::vec3{ 0, 0, 0 };
 
