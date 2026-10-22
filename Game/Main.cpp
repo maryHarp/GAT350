@@ -28,16 +28,6 @@ int main()
 
 
 
-    struct vertexUniform
-    {
-
-        glm::mat4 mvp;
-    };
-
-    vertexUniform uniform;
-    glm::vec3 cameraPosition{ 0,0,5 };
-
-    Transform transform; 
 
     auto pipeline = std::make_shared<Pipeline>();
 
@@ -50,7 +40,7 @@ int main()
     auto model = Resources().Get<Model>("models/spot.obj", Engine::Get().GetRenderer());
     auto texture = Resources().Get<Texture>("textures/spot_diffuse.png", Engine::Get().GetRenderer());
 
-    auto vshader = Resources().Get<nu::Shader>("shaders/lit.vert", Engine::Get().GetRenderer(), 1);
+    auto vshader = Resources().Get<nu::Shader>("shaders/lit.vert", Engine::Get().GetRenderer(), 2);
     auto fshader = Resources().Get<nu::Shader>("shaders/lit.frag", Engine::Get().GetRenderer(), 1, 1);
 
     pipeline->Create(*vshader.get(), *fshader.get(),
@@ -58,9 +48,40 @@ int main()
         Engine::Get().GetRenderer().GetWindow());
 
 
-
+    //uniforms
     glm::vec4 color { 1,1,1,1 };
 
+    struct VertexUniform
+    {
+
+        glm::mat4 mvp;
+        glm::mat4 model;
+    };
+
+    VertexUniform vertexUniform;
+
+    struct LightUnifrom 
+    {
+        glm::vec3 lightDirection;
+        float padding1;
+        glm::vec3 lightColor;
+        float lightIntensity;
+        glm::vec3 ambient;
+        float padding2;
+
+
+    };
+
+    LightUnifrom lightUniform{
+        .lightDirection{0, -1, 0},
+        .lightColor{0,0,1},
+        .lightIntensity{1},
+        .ambient{0.1f}
+    };
+
+    glm::vec3 cameraPosition{ 0,0,5 };
+
+    Transform transform; 
 
 
 
@@ -100,6 +121,8 @@ int main()
 
         cameraPosition += direction * 4.0f * dt;
 
+        lightUniform.lightIntensity = std::sin(time) * 0.5f + 0.5f;
+
         //transform
         transform.rotation.y = time * 90;
 
@@ -112,19 +135,18 @@ int main()
         auto projection = glm::perspective(glm::radians(70.0f), aspectRatio, 0.01f, 20.0f);
 
         //mvp
-        uniform.mvp = projection * view * transform.GetMatrix();
+        vertexUniform.model = transform.GetMatrix();
+        vertexUniform.mvp = projection * view * vertexUniform.model;
 
 
         //render
-        // RENDER
-        // 
-       
-
+        
         Engine::Get().GetRenderer().BeginFrame();
 
         Engine::Get().GetRenderer().SetPipeline(*pipeline);
 
-        Engine::Get().GetRenderer().setVertexUniform(0, &uniform, sizeof(uniform));
+        Engine::Get().GetRenderer().setVertexUniform(0, &vertexUniform, sizeof(vertexUniform));
+        Engine::Get().GetRenderer().setVertexUniform(1, &lightUniform, sizeof(lightUniform));
         Engine::Get().GetRenderer().setFragmentUniform(0, &color, sizeof(color));
         Engine::Get().GetRenderer().SetFragmentTexture(0, *texture);
 
