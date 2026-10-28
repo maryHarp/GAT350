@@ -83,8 +83,8 @@ int main()
         .type{ LightType::Point },
         .direction{0, -1, 0},
         .innerCutoff{0.3f},
-        .color{1,1,1},
-        .intensity{1},
+        .color{1,0,1},
+        .intensity{0.5},
         .ambient{0.1f},
         .outerCutoff{0.6f}
     };
@@ -157,7 +157,7 @@ int main()
         //lightUniform.intensity = std::sin(time) * 0.5f + 0.5f;
 
         //transform
-        transform.rotation.y = time * 90;
+        //transform.rotation.y = time * 90;
 
 
         // view matrix
