@@ -50,11 +50,7 @@ Output main(Input input)
     float3 N = normalize(mul((float3x3) model, input.normal));
     float3 V = normalize(cameraPosition - worldPosition);
     
-    output.diffuse = light.ambient + calculateDiffuse(radiance, N, L);
-    
-    //specular
-    output.specular = calculateSpecular(radiance, N, L, V, material);
-    
+    calculateLighting(light, material, worldPosition, N, V, output.diffuse, output.specular);
     
     return output;
     

@@ -208,8 +208,8 @@ namespace nu
 			.min_filter = SDL_GPU_FILTER_LINEAR, // todo: smooth when the texture is shrunk (SDL_GPU_FILTER_...)
 			.mag_filter = SDL_GPU_FILTER_NEAREST, // todo: smooth when the texture is enlarged (SDL_GPU_FILTER_...)
 			.mipmap_mode = SDL_GPU_SAMPLERMIPMAPMODE_LINEAR,
-			.address_mode_u = SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE, // todo: tile the texture horizontally (SDL_GPU_SAMPLERADDRESSMODE_...)
-			.address_mode_v = SDL_GPU_SAMPLERADDRESSMODE_MIRRORED_REPEAT, // todo: tile the texture vertically (SDL_GPU_SAMPLERADDRESSMODE_...)
+			.address_mode_u = SDL_GPU_SAMPLERADDRESSMODE_REPEAT, // todo: tile the texture horizontally (SDL_GPU_SAMPLERADDRESSMODE_...)
+			.address_mode_v = SDL_GPU_SAMPLERADDRESSMODE_REPEAT, // todo: tile the texture vertically (SDL_GPU_SAMPLERADDRESSMODE_...)
 			.address_mode_w = SDL_GPU_SAMPLERADDRESSMODE_REPEAT
 		};
 
