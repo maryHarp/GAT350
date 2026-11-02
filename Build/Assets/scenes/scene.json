@@ -1,0 +1,24 @@
+{
+  "actors": [
+    {
+      "name": "Camera",
+      "type": "Actor",
+      "tag": "Camera",
+      "transform": {
+        "position": [ 0, 0, 5 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "active": true,
+      "health": 40.0,
+      "components": [
+        {
+          "type": "CameraComponent",
+          "fov": 70.0,
+          "near_plane": 0.001,
+          "far_plane":  200
+        }
+      ]
+    }
+  ]
+}
