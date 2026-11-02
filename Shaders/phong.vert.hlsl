@@ -1,4 +1,4 @@
-#include "Lighting.hlsli"
+#include "lighting.hlsli"
 
 cbuffer VertexUniforms : register(b0, space1)
 {
@@ -10,7 +10,9 @@ cbuffer VertexUniforms : register(b0, space1)
 
 cbuffer LightUniforms : register(b1, space1)
 {
-    Light light;
+    Light lights[MAX_LIGHTS];
+    uint numLights;
+    float3 ambient;
 }
 
 cbuffer MaterialUniforms : register(b2, space1)
@@ -22,7 +24,7 @@ struct Input
 {
     float3 position : TEXCOORD0;
     float2 texcoord : TEXCOORD1;
-    float3 normal : TEXTCOORD2;
+    float3 normal : TEXCOORD2;
                         
 };
 

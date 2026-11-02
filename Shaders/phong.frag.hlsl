@@ -13,7 +13,9 @@ cbuffer VertexUniforms : register(b0, space3)
 
 cbuffer LightUniforms : register(b1, space3)
 {
-    Light light;
+    Light lights[MAX_LIGHTS];
+    uint numLights;
+    float3 ambient;
 }
 
 cbuffer MaterialUniforms : register(b2, space3)
@@ -25,7 +27,7 @@ cbuffer MaterialUniforms : register(b2, space3)
 struct Input
 {
     float2 texcoord : TEXCOORD0;    
-    float3 worldPosition : TEXTCOORD1;
+    float3 worldPosition : TEXCOORD1;
     float3 normal : TEXCOORD2;
 };
 
@@ -39,11 +41,15 @@ Output main(Input input)
 	Output output;
     
     float4 albedo = u_texture.Sample(u_sampler, input.texcoord) * material.color;
-    float3 diffuse;
-    float3 specular;
+    float3 diffuse = ambient;
+    float3 specular = 0;
     
     float3 V = normalize(cameraPosition - input.worldPosition);
-    calculateLighting(light, material, input.worldPosition, normalize(input.normal), V, diffuse, specular);
+    for (uint i = 0; i < numLights; i++)
+    {
+        
+        calculateLighting(lights[i], material, input.worldPosition, normalize(input.normal), V, diffuse, specular);
+    }
     
     output.color = float4(albedo.rgb * diffuse + specular, albedo.a);
 

@@ -16,6 +16,7 @@
 #include <glm/gtx/transform.hpp>
 
 #define CHECK_UNIFORM_BOUNDARY(T) static_assert((sizeof(T) % 16) == 0);
+#define MAX_LIGHTS 8
 
 using namespace nu;
 
@@ -42,7 +43,7 @@ int main()
     pipeline->AddVertexAttribute(2, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, normal));
     pipeline->AddVertexAttribute(3, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, tangent));
 
-    auto model = Resources().Get<Model>("models/plane.obj", Engine::Get().GetRenderer());
+    auto model = Resources().Get<Model>("models/dragon.obj", Engine::Get().GetRenderer());
     auto texture = Resources().Get<Texture>("textures/lava_diffuse.png", Engine::Get().GetRenderer());
 
     auto vshader = Resources().Get<nu::Shader>("shaders/phong.vert", Engine::Get().GetRenderer(), 3);
@@ -64,12 +65,11 @@ int main()
 
     };
 
-    CHECK_UNIFORM_BOUNDARY(VertexUniform)
+    CHECK_UNIFORM_BOUNDARY(VertexUniform);
 
     VertexUniform vertexUniform;
 
-    struct LightUniform 
-    {
+    struct Light {
         glm::vec3 position;
         LightType type;
         glm::vec3 direction;
@@ -80,24 +80,57 @@ int main()
         float innerCutoff;
         float outerCutoff;
         glm::vec3 padding;
-
-
     };
 
-    CHECK_UNIFORM_BOUNDARY(LightUniform)
+    struct LightUniform {
+        Light lights[MAX_LIGHTS];
+        uint32_t numLights;
+        glm::vec3 ambient;
+    };
 
-    LightUniform lightUniform{
-        .position{10, 10, 10},
+
+    CHECK_UNIFORM_BOUNDARY(LightUniform)
+    LightUniform lightUniform;
+
+    Light light1{
+        .position{20, 10, 10},
+        .type{ LightType::Directional },
+        .direction{0, -1, 0},
+        .range{200},
+        .color{1,1,1},
+        .intensity{0.8},
+        .ambient{0.3f},
+        .innerCutoff{0.8f},
+        .outerCutoff{1.6f}
+    };
+    Light light2{
+        .position{-20, 15, 10},
         .type{ LightType::Point },
         .direction{0, -1, 0},
-        .range{400},
-        .color{1,1,1},
-        .intensity{0.5},
-        .ambient{0.1f},
+        .range{200},
+        .color{0,0,1},
+        .intensity{0.8},
+        .ambient{0.5f},
+        .innerCutoff{0.3f},
+        .outerCutoff{1.6f}
+    };
+    Light light3{
+        .position{0, 60, 600},
+        .type{ LightType::Directional},
+        .direction{0, -1, 0},
+        .range{200},
+        .color{1,0,0},
+        .intensity{0.8},
+        .ambient{0.5f},
         .innerCutoff{0.3f},
         .outerCutoff{1.6f}
     };
 
+    lightUniform.lights[0] = light1;
+    lightUniform.lights[1] = light2;
+    //lightUniform.lights[2] = light3;
+    lightUniform.numLights = 2;
+    lightUniform.ambient = glm::vec3{ 0.2f };
 
     struct MaterialUniform {
         glm::vec4 color;
@@ -119,7 +152,7 @@ int main()
     vertexUniform.cameraPosition = { 0,3,8 };
 
     Transform transform; 
-        transform.scale = glm::vec3{ 4.0f };
+        transform.scale = glm::vec3{ 2.0f };
 
 
 
@@ -156,16 +189,19 @@ int main()
         if ((Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_E))) direction.z = +1;
 
 
-        //vertexUniform.cameraPosition = glm::vec3{ 0, 3, 0 };
+        vertexUniform.cameraPosition += direction * 4.0f * dt;
 
-        if ((Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_1))) lightUniform.type = LightType::Directional;
-        if ((Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_2))) lightUniform.type = LightType::Point;
+        //lightUniform.lights[0].position = glm::eulerAngleY(time) * glm::vec4{ 0,0,10, 1};
+        //lightUniform.lights[1].position = glm::eulerAngleX(time * 0.5f) * glm::vec4{ 0,0,10, 1};
+
+        /*if ((Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_1))) light1.type = LightType::Directional;
+        if ((Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_2))) light1.type = LightType::Point;
         if ((Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_3))) {
-            lightUniform.type = LightType::Spot;
-            lightUniform.position = glm::vec3{ 0, 10, 0 };
-            lightUniform.innerCutoff = glm::cos(glm::radians(10.0f));
-            lightUniform.outerCutoff = glm::cos(glm::radians(15.0f));
-        }
+            light1.type = LightType::Spot;
+            light1.position = glm::vec3{ 0, 10, 0 };
+            light1.innerCutoff = glm::cos(glm::radians(10.0f));
+            light1.outerCutoff = glm::cos(glm::radians(15.0f));
+        }*/
 
         //materialUnifrom.offset.x = time * 0.2f;
         //materialUnifrom.tiling = glm::vec2{ 2.0f };
@@ -199,7 +235,7 @@ int main()
 
         Engine::Get().GetRenderer().setFragmentUniform(0, &vertexUniform, sizeof(vertexUniform));
         Engine::Get().GetRenderer().setFragmentUniform(1, &lightUniform, sizeof(lightUniform));
-        Engine::Get().GetRenderer().setFragmentUniform(2, &materialUniform, sizeof(&materialUniform));
+        Engine::Get().GetRenderer().setFragmentUniform(2, &materialUniform, sizeof(materialUniform));
 
         Engine::Get().GetRenderer().SetFragmentTexture(0, *texture);
 
