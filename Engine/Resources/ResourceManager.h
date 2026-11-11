@@ -16,6 +16,11 @@ namespace nu {
 		template<typename T, typename ... Args>
 			requires std::derived_from<T, Resource>
 		res_t<T> GetWithID(const std::string& id, const std::string& name, Args&& ... args);
+
+		void Clear() {
+			m_resources.clear();
+		}
+
 	private:
 		std::map<std::string, res_t<Resource>> m_resources;
 	private:

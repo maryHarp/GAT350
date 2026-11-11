@@ -18,15 +18,15 @@ namespace nu {
 
 		bool Load(const std::string& sceneName);
 		
-
 		template<typename T = Actor>
 		T* GetActorByName(const std::string& name);
+
+		template<typename T = Actor>
+		std::vector<T*> GetActorByTag(const std::string& tag);
 
 		void SetGame(class Game* game) { m_game = game; }
 		class Game* GetGame() { return m_game;  }
 
-	private:
-		void UpdateCollisions();
 
 	private:
 		std::vector<std::unique_ptr<Actor>> m_actors;
@@ -45,5 +45,17 @@ namespace nu {
 		}
 
 		return nullptr;
+	}
+	template<typename T>
+	inline std::vector<T*> Scene::GetActorByTag(const std::string& tag)
+	{
+		std::vector<T*> result;
+		for (auto& actor : m_actors) {
+			T* actorT = dynamic_cast<T*>(actor.get());
+			if (actorT && actorT->m_tag == tag) {
+				result.push_back(actorT);
+			}
+		}
+		return result;
 	}
 }

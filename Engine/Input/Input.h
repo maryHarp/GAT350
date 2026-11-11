@@ -1,6 +1,6 @@
 #pragma once
-#include "Math/Vector2.h"
 #include <vector>
+#include <glm/glm.hpp>
 
 
 namespace nu {
@@ -28,7 +28,8 @@ namespace nu {
 
 		bool GetMouseDown(MouseButton button) const { return false; }
 
-		Vector2 GetMousePosition() const { return m_mousePosition; }
+		glm::vec2 GetMousePosition() const { return m_mousePosition; }
+		glm::vec2 GetMouseDelta() const { return m_mousePosition - m_prevMousePosition; }
 
 		bool GetButtonDown(MouseButton button) const { return m_buttonStates & GetButtonBit(button);  }
 		bool GetPrevButtonDown(MouseButton button) const { return m_prevButtonStates & GetButtonBit(button);  }
@@ -49,6 +50,7 @@ namespace nu {
 		uint32_t m_buttonStates = 0;
 		uint32_t m_prevButtonStates = 0;
 
-		Vector2 m_mousePosition{ 0,0 };
+		glm::vec2 m_prevMousePosition{0,0};
+		glm::vec2 m_mousePosition{ 0,0 };
 	};
 }

@@ -23,14 +23,18 @@ struct Light
     uint type;
     float3 direction;
     float range;
-    float innerCutoff;
     float3 color;
-    float3 ambient;
     float intensity;
+    float innerCutoff;
     float outerCutoff;
     float3 padding;
-    
-  
+};
+
+struct Lights
+{
+    Light lights[MAX_LIGHTS];
+    float3 ambient;
+    uint numLights;
 };
 
 
@@ -62,7 +66,7 @@ float3 getLightVector(Light light, float3 position, out float attenuation )
             float distance = length(toLight);
             L = toLight / distance;
             attenuation = calculateAttenuation(distance, light.range);
-            attenuation = smoothstep(light.outerCutoff, light.innerCutoff, dot(-L, light.direction));
+                attenuation = smoothstep(light.outerCutoff, light.innerCutoff, acos(dot(-L, light.direction)));
             break;
         }
             
