@@ -6,8 +6,8 @@
       "tag": "Camera",
       "active": true,
       "transform": {
-        "position": [ 0, 0, 5 ],
-        "rotation": [ 0, 0, 0 ],
+        "position": [ 1, 5, 5 ],
+        "rotation": [ 0, 0.5, 0 ],
         "scale": [ 1, 1, 1 ]
       },
       "components": [
@@ -29,13 +29,14 @@
       "type": "Actor",
       "tag": "Light",
       "transform": {
+        "position": [ -5, 5, 0 ],
         "rotation": [ -60, 30, 0 ]
       },
       "components": [
         {
           "type": "LightComponent",
           "light_type": "directional",
-          "color": [ 0.5, 0.5, 0.5 ],
+          "color": [ 1, 0.85, 0.2 ],
           "intensity": 1.0
         }
       ]
@@ -51,7 +52,7 @@
         {
           "type": "LightComponent",
           "light_type": "point",
-          "color": [ 1, 1, 1 ],
+          "color": [ 0, 0.5, 1 ],
           "intensity": 1.0,
           "range": 40.0
         }
@@ -74,12 +75,73 @@
       "name": "Cubone",
       "type": "Actor",
       "transform": {
-        "position": [ -2, 0, 0 ]
+        "position": [ 3, 1.5, 4 ],
+        "rotation": [ 15, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
       },
       "components": [
         {
           "type": "ModelComponent",
           "model": "models/cubone.glb"
+        }
+      ]
+    },
+    {
+      "name": "Dragon",
+      "type": "Actor",
+      "transform": {
+        "position": [ 3, 1.5, 0 ],
+        "scale": [ 0.2, 0.2, 0.2 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/dragon.obj"
+        }
+      ]
+    },
+    {
+      "name": "Plane",
+      "type": "Actor",
+      "transform": {
+        "position": [ 1, 1, 1 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/plane.obj"
+        }
+      ]
+    },
+    {
+      "name": "Teapot",
+      "type": "Actor",
+      "transform": {
+        "position": [ 1, 1.5, 0 ],
+        "rotation": [ 0, 0, 180 ],
+        "scale": [ 0.25, 0.25, 0.25 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/teapot.obj"
+        }
+      ]
+    },
+    {
+      "name": "Spot",
+      "type": "Actor",
+      "transform": {
+        "position": [ 1, 1.5, 4 ],
+        "rotation": [ 1, 0, 0],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/spot.obj"
         }
       ]
     }

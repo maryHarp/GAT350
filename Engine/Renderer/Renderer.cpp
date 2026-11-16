@@ -74,6 +74,7 @@ namespace nu
             std::cerr << "Could not acquire command buffer: " << SDL_GetError() << std::endl;
             return false;
         }
+        m_swapchainTexture = nullptr;
 
 
         SDL_GPUTexture* swapchainTexture = nullptr;
@@ -85,6 +86,8 @@ namespace nu
 
         if (swapchainTexture != nullptr)
         {
+            m_swapchainTexture = swapchainTexture;
+
             // configure the color target attachments (This handles clearing the screen)
             SDL_GPUColorTargetInfo color_target_info{};
             color_target_info.texture = swapchainTexture;
@@ -122,9 +125,18 @@ namespace nu
         }
 
         m_commandBuffer = nullptr;
+        m_swapchainTexture = nullptr;
 
         return true;
     }
+
+    void Renderer::EndRenderPass() {
+        if (m_renderPass) {
+            SDL_EndGPURenderPass(m_renderPass);
+            m_renderPass = nullptr;
+        }
+    }
+
     
     void Renderer::Shutdown()
     {

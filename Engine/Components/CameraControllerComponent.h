@@ -14,7 +14,7 @@ namespace nu
 	private:
 		float m_speed{ 1 };
 		float m_sensitivity{ 1 };
-		float m_pitch{ 1 };
-		float m_yaw{ 1 };
+		float m_pitch{ 0 };
+		float m_yaw{ 0 };
 	};
 }

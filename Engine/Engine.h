@@ -19,6 +19,8 @@
 
 #include "Serialization/Json.h"
 
+#include "Editor/Editor.h"
+
 
 //systems
 #include "Input/Input.h"
@@ -55,6 +57,9 @@ namespace nu {
 		Audio& GetAudio() { return m_audio; }
 		ParticleSystem& GetPS() { return m_particleSystem;  }
 
+
+		Editor& GetEditor() { return *m_editor; }
+
 	private:
 		Engine() = default;
 
@@ -64,6 +69,7 @@ namespace nu {
 		Time m_time;
 		Audio m_audio;
 		ParticleSystem m_particleSystem;
+		std::unique_ptr<Editor> m_editor;
 
 	};
 

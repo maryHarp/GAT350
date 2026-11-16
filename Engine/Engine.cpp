@@ -13,15 +13,19 @@ namespace nu {
 		m_input.Initialize();
 		m_audio.Initialize();
 		m_particleSystem.Initialize();
+	
+		m_editor = std::make_unique<Editor>();
+		m_editor->Initialize(m_renderer);
 		//m_physics.Initialize();
 
 		return true;
 	}
 	void Engine::Shutdown() {
 		m_input.Shutdown();
-		m_renderer.Shutdown();
 		m_audio.Shutdown();
 		m_particleSystem.Shutdown();
+		m_editor->Shutdown();
+		m_renderer.Shutdown();
 		//m_physics.Shutdown();
 	}
 
