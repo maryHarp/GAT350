@@ -9,13 +9,16 @@ namespace nu {
 
 	bool Engine::Initialize() {
 
-		m_renderer.Initialize("Game Engine", 1280, 1024);
-		m_input.Initialize();
-		m_audio.Initialize();
-		m_particleSystem.Initialize();
-	
+		//m_renderer = std::make_unique<Renderer>();
 		m_editor = std::make_unique<Editor>();
+
+
+		m_renderer.Initialize("Game Engine", 1280, 1024);
 		m_editor->Initialize(m_renderer);
+		m_particleSystem.Initialize();
+		m_audio.Initialize();
+		m_input.Initialize();
+	
 		//m_physics.Initialize();
 
 		return true;

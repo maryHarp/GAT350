@@ -4,6 +4,7 @@
 #include "Uniforms.h"
 #include "Serialization/Json.h"
 #include "Resources/ResourceManager.h"
+#include <glm/gtc/type_ptr.hpp>
 
 namespace nu
 {
@@ -49,10 +50,13 @@ namespace nu
 		Initialize(material);
 
 		// only values present in the file override the defaults
+
 		JSON_READ_NAME(document, "base_color", m_data.baseColor);
+		JSON_READ_NAME(document, "specular_color", m_data.specularColor);
+		JSON_READ_NAME(document, "shininess", m_data.shininess);
+		JSON_READ_NAME(document, "emissive_color", m_data.emissiveColor);
 		JSON_READ_NAME(document, "tiling", m_data.tiling);
 		JSON_READ_NAME(document, "offset", m_data.offset);
-		JSON_READ_NAME(document, "shininess", m_data.shininess);
 
 		// textures by slot name: "textures": { "base_map": "textures/brick.png" }
 		if (JSON_HAS_NAME(document, "textures"))
@@ -81,6 +85,7 @@ namespace nu
 
 	void MaterialInstance::Bind(SDL_GPUCommandBuffer* commandBuffer, SDL_GPURenderPass* renderPass) const
 	{
+
 		// empty slots fall back to a default texture so the shader can always sample
 		std::vector<SDL_GPUTextureSamplerBinding> bindings;
 		bindings.reserve(m_textures.size());
@@ -112,5 +117,22 @@ namespace nu
 
 		m_textures[slot] = texture;
 		return true;
+	}
+	void MaterialInstance::UpdateGui()
+	{
+		ImGui::ColorEdit4("Base Color", glm::value_ptr(m_data.baseColor));
+		ImGui::ColorEdit3("Specular Color", glm::value_ptr(m_data.specularColor));
+		ImGui::SliderFloat("Shininess", &m_data.shininess, 2, 256);
+		ImGui::ColorEdit3("Emissive Color", glm::value_ptr(m_data.emissiveColor));
+		ImGui::DragFloat2("Tiling", glm::value_ptr(m_data.tiling), 0.1f);
+		ImGui::DragFloat2("Offset", glm::value_ptr(m_data.offset), 0.1f);
+
+		ImGui::TextColored({ 0, 1, 0 ,1 }, "Model");
+		ImGui::Separator();
+
+		for (auto& texture : m_textures) {
+			ImGui::Separator();
+			if (texture) texture->UpdateGui();
+		}
 	}
 }

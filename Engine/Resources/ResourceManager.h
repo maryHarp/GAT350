@@ -17,6 +17,11 @@ namespace nu {
 			requires std::derived_from<T, Resource>
 		res_t<T> GetWithID(const std::string& id, const std::string& name, Args&& ... args);
 
+		const auto& GetAll() const { return m_resources; }
+
+		template<std::derived_from<Resource> T = Resource>
+		bool AddResource(const std::string& name, const res_t<T>& resource);
+
 		void Clear() {
 			m_resources.clear();
 		}
@@ -44,18 +49,17 @@ namespace nu {
 		// check if exists
 		if (iter != m_resources.end())
 		{
-			// get value in iterator
 			auto base = iter->second;
-			// cast to data type T
 			auto resource = std::dynamic_pointer_cast<T>(base);
-			// check if cast was successful
 			if (resource == nullptr)
 			{
 				std::cerr << "Resource type mismatch: " << id << std::endl;
 				return res_t<T>();
 			}
 
-			// return resource
+			resource->SetName(name);
+			m_resources[name] = resource;
+
 			return resource;
 		}
 
@@ -65,9 +69,28 @@ namespace nu {
 			std::cerr << "Could not load resource: " << name << std::endl;
 			return res_t<T>();
 		}
+		resource->SetName(id);
 		m_resources[id] = resource;
 
 		return resource;
+	}
+
+	template<std::derived_from<Resource> T>
+	inline bool ResourceManager::AddResource(const std::string& name, const res_t<T>& resource) {
+		auto iter = m_resources.find(name);
+		// check if exists
+		if (iter != m_resources.end())
+		{
+			std::cerr << "Resource already exists: " << name << std::endl;
+				return false;
+		}
+			
+
+			// return resource
+			resource->SetName(name);
+			m_resources[name] = resource;
+
+			return true;
 	}
 
 	inline ResourceManager& Resources() { return ResourceManager::Instance(); }

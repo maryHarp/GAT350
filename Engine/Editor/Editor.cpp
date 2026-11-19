@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "Editor.h"
 #include "Renderer/Renderer.h"
+#include "Framework/Scene.h"
+#include "Framework/Object.h"
+#include "Resources/ResourceManager.h"
 
 
 namespace nu
@@ -49,13 +52,17 @@ namespace nu
 		ImGui_ImplSDL3_ProcessEvent(&event);
 	}
 
-	void Editor::Update()
+	void Editor::Update(Scene& scene)
 	{
 		if (ImGui::IsKeyPressed(ImGuiKey_GraveAccent)) 
 			m_active = !m_active;
 		if (!m_active) return;
 		
-		ImGui::ShowDemoWindow();
+		UpdateHierarchy(scene);
+		UpdateInspector();
+		UpdateAssets();
+
+		//ImGui::ShowDemoWindow();
 	}
 
 	void Editor::BeginFrame()
@@ -89,5 +96,45 @@ namespace nu
 		SDL_GPURenderPass* renderPass = SDL_BeginGPURenderPass(commandBuffer, &target, 1, nullptr);
 		ImGui_ImplSDLGPU3_RenderDrawData(drawData, commandBuffer, renderPass);
 		SDL_EndGPURenderPass(renderPass);
+	}
+	void Editor::UpdateHierarchy(Scene& scene)
+	{
+		ImGui::Begin("Hierarchy");
+
+		scene.UpdateGui();
+		ImGui::Separator();
+
+		for (auto& actor : scene.GetActors()) {
+			ImGui::PushID(actor.get());
+			if (ImGui::Selectable(actor->GetName().c_str(), m_selected == actor.get())) {
+				m_selected = actor.get();
+			}
+			ImGui::PopID();
+		}
+
+		ImGui::End();
+	}
+	void Editor::UpdateInspector()
+	{
+		ImGui::Begin("Inspector");
+		if (m_selected) {
+			m_selected->UpdateGui();
+		}
+		ImGui::End();
+	}
+	void Editor::UpdateAssets()
+	{
+		ImGui::Begin("Assets");
+
+		for (auto& resource : Resources().GetAll()) {
+			ImGui::PushID(resource.second.get());
+			if (ImGui::Selectable(resource.second->GetName().c_str(), m_selected == resource.second.get())) {
+				m_selected = resource.second.get();
+			}
+			
+			ImGui::PopID();
+		}
+
+		ImGui::End();
 	}
 }

@@ -12,7 +12,8 @@ namespace nu
 		void Draw(const Renderer& renderer) override;
 		void Read(const json::value_t& value) override;
 
-		LightData GetLightData() const; 
+		LightData GetLightData() const;
+		void UpdateGui() override;
 
 
 	private:

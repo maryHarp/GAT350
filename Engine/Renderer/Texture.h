@@ -27,6 +27,9 @@ namespace nu
 			return m_gpuSampler;
 		}
 
+		void UpdateGui() override;
+
+
 		friend class Renderer;
 
 	private:
