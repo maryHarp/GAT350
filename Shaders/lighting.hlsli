@@ -13,7 +13,7 @@ struct Material
     float3 specularColor;
     float shininess;
     float3 emissiveColor;
-    float3 padding;
+    float padding;
     float2 tiling;
     float2 offset;
     

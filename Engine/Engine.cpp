@@ -13,7 +13,7 @@ namespace nu {
 		m_editor = std::make_unique<Editor>();
 
 
-		m_renderer.Initialize("Game Engine", 1280, 1024);
+		m_renderer.Initialize("Game Engine", 1920, 1080);
 		m_editor->Initialize(m_renderer);
 		m_particleSystem.Initialize();
 		m_audio.Initialize();
