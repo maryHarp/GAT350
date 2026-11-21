@@ -36,7 +36,7 @@
         {
           "type": "LightComponent",
           "light_type": "directional",
-          "color": [ 1, 0.85, 0.2 ],
+          "color": [ 1, 1, 1 ],
           "intensity": 1.0
         }
       ]
@@ -52,17 +52,17 @@
         {
           "type": "LightComponent",
           "light_type": "point",
-          "color": [ 0, 0.5, 1 ],
+          "color": [ 1, 1, 1 ],
           "intensity": 1.0,
           "range": 40.0
         }
       ]
     },
     {
-      "name": "Helmet",
+      "name": "Ogre",
       "type": "Actor",
       "transform": {
-        "position": [ 0, 0, 0 ]
+        "position": [ 0, 5, 0 ]
       },
       "components": [
         {

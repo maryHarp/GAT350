@@ -37,6 +37,6 @@ namespace nu
 
 	private:
 		bool m_active = true;
-		class Object* m_selected{ nullptr };
+		IGUI* m_selected{ nullptr };
 	};
 }

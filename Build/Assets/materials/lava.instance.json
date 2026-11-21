@@ -1,7 +1,7 @@
 {
 	"type": "material_instance",
 	"material": "materials/phong.material.json",
-	"emissive_color": [ 1, 1, 1 ],
+	"emissive_color": [ 1, 0, 1 ],
 	"tiling": [ 1, 1 ],
 	"textures": {
 		"base_map": "textures/lava_diffuse.png",
